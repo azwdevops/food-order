@@ -1,4 +1,4 @@
-import { GetFoodAvailability, GetFoodsIn30Min, GetRestaurantById, GetTopRestaurants, SearchFoods } from "@/controllers/ShoppingController";
+import { GetFoodAvailability, GetFoodsIn30Min, GetRestaurantById, GetTopRestaurants, SearchFoods } from "@/controllers";
 import express from "express";
 
 const router = express.Router();
