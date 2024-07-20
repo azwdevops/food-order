@@ -1,4 +1,4 @@
-import { GetFoodAvailability, GetFoodsIn30Min, GetRestaurantById, GetTopRestaurants, SearchFoods } from "@/controllers";
+import { GetAvailableOffers, GetFoodAvailability, GetFoodsIn30Min, GetRestaurantById, GetTopRestaurants, SearchFoods } from "@/controllers";
 import express from "express";
 
 const router = express.Router();
@@ -11,6 +11,9 @@ router.get("/top-restaurants/:pincode", GetTopRestaurants);
 router.get("/foods-in-30-min/:pincode", GetFoodsIn30Min);
 /** ---------------------- SEARCH FOODS ------------------------- */
 router.get("/search/:pincode", SearchFoods);
+
+router.get("/offers/:pincode", GetAvailableOffers);
+
 /** ---------------------- FIND RESTAURANT BY ID ------------------------- */
 router.get("/restaurant/:id", GetRestaurantById);
 

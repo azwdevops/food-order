@@ -35,3 +35,13 @@ export class EditCustomerProfileInputs {
   @Length(3, 16)
   address: string;
 }
+export class CartItem {
+  _id: string;
+  unit: number;
+}
+
+export class OrderInputs {
+  transactionId: string;
+  amount: number;
+  items: [CartItem];
+}

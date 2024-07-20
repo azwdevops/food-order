@@ -1,23 +1,21 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { OrderDoc } from "./OrderModel";
-interface CustomerDoc extends Document {
+interface DeliveryUserDoc extends Document {
   email: string;
   password: string;
   salt: string;
   firstName: string;
   lastName: string;
   address: string;
+  pincode: string;
   phone: string;
   verified: boolean;
-  otp: number;
-  otp_expiry: Date;
   lat: number;
   lng: number;
-  orders: [OrderDoc];
-  cart: [any];
+  isAvailable: boolean;
 }
 
-const CustomerSchema = new Schema(
+const DeliveryUserSchema = new Schema(
   {
     email: { type: String, required: true },
     password: { type: String, required: true },
@@ -25,14 +23,12 @@ const CustomerSchema = new Schema(
     firstName: { type: String },
     lastName: { type: String },
     address: { type: String },
+    pincode: { type: String, required: true },
     phone: { type: String, required: true },
     verified: { type: Boolean, required: true },
-    otp: { type: Date },
-    otp_expiry: { type: Number },
     lat: { type: Number },
     lng: { type: Number },
-    orders: [{ type: Schema.Types.ObjectId, ref: "order" }],
-    cart: [{ food: { type: Schema.Types.ObjectId, ref: "food", required: true }, unit: { type: Number, required: true } }],
+    isAvailable: { type: Boolean },
   },
   {
     toJSON: {
@@ -44,6 +40,6 @@ const CustomerSchema = new Schema(
   }
 );
 
-const CustomerModel = mongoose.model<CustomerDoc>("customer", CustomerSchema);
+const DeliveryUserModel = mongoose.model<DeliveryUserDoc>("delivery_user", DeliveryUserSchema);
 
-export { CustomerModel };
+export { DeliveryUserModel };

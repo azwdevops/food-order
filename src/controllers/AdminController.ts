@@ -1,5 +1,5 @@
 import { CreateVendorInput } from "@/dto";
-import { VendorModel } from "@/models";
+import { DeliveryUserModel, TransactionModel, VendorModel } from "@/models";
 import { GeneratePassword, GenerateSalt } from "@/utils";
 import { NextFunction, Request, Response } from "express";
 
@@ -37,6 +37,8 @@ export const CreateVendor = async (req: Request, res: Response, next: NextFuncti
     serviceAvailable: false,
     coverImages: [],
     foods: [],
+    lat: 0,
+    lng: 0,
   });
 
   return res.json(createdVendor);
@@ -57,4 +59,41 @@ export const GetVendorByID = async (req: Request, res: Response, next: NextFunct
     return res.json({ message: "Vendor not available" });
   }
   return res.json(vendor);
+};
+
+export const GetTransactions = async (req: Request, res: Response, next: NextFunction) => {
+  const transactions = await TransactionModel.find();
+  if (transactions.length > 0) {
+    return res.status(200).json(transactions);
+  }
+  return res.json({ message: "No transactions available" });
+};
+
+export const GetTransactionById = async (req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id;
+  const transaction = await TransactionModel.findById(id);
+  if (transaction) {
+    return res.status(200).json(transaction);
+  }
+  return res.status(404).json({ message: "Transaction is not available" });
+};
+
+export const VerifyDeliveryUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { _id, status } = req.body;
+  if (_id) {
+    const profile = await DeliveryUserModel.findById(_id);
+    if (profile) {
+      profile.verified = status;
+      const result = await profile.save();
+
+      return res.status(200).json(result);
+    }
+  }
+  return res.status(400).json({ message: "Unable to verify delivery user" });
+};
+
+export const GetDeliveryUsers = async (req: Request, res: Response, next: NextFunction) => {
+  const deliveryUsers = await DeliveryUserModel.find();
+
+  return res.status(200).json(deliveryUsers);
 };

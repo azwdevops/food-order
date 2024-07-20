@@ -1,4 +1,18 @@
-import { AddFood, GetFoods, GetVendorProfile, UpdateVendorCoverImage, UpdateVendorProfile, UpdateVendorService, VendorLogin } from "@/controllers";
+import {
+  AddFood,
+  AddOffer,
+  EditOffer,
+  GetFoods,
+  GetOffers,
+  GetOrderDetails,
+  GetOrders,
+  GetVendorProfile,
+  ProcessOrder,
+  UpdateVendorCoverImage,
+  UpdateVendorProfile,
+  UpdateVendorService,
+  VendorLogin,
+} from "@/controllers";
 import { Authenticate } from "@/middlewares";
 import express from "express";
 import multer from "multer";
@@ -27,5 +41,13 @@ router.patch("/service", UpdateVendorService);
 
 router.post("/food", images, AddFood);
 router.get("/foods", GetFoods);
+
+router.get("/orders", GetOrders);
+router.put("/order/:id/process", ProcessOrder);
+router.get("/order/:id", GetOrderDetails);
+
+router.get("/offers", GetOffers);
+router.post("/offer", AddOffer);
+router.put("/offer/:id", EditOffer);
 
 export { router as VendorRoute };
